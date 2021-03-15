@@ -2,12 +2,14 @@ package com.framework.tests;
 
 import com.framework.base.TestBase;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pageObjects.LoginPage;
 import pageObjects.ProfilePage;
 import pageObjects.ReviewPage;
 import pageObjects.ReviewSubmitPage;
 
+@Listeners(reports.ExtentListener.class)
 public class HomePageTest extends TestBase {
     LoginPage loginPage = new LoginPage();
     ReviewPage reviewPage = new ReviewPage();
