@@ -1,21 +1,22 @@
 package utils;
 
 import driverFactory.DriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.WebElement;
+import lombok.SneakyThrows;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import reports.ExtentLogger;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class PageActionUtils {
 
     public static void click(By element){
         try {
             getElement(element).click();
-            ExtentLogger.info("Element Clicked " + element.toString());
+            ExtentLogger.pass("Element Clicked " + element.toString());
         } catch (ElementClickInterceptedException clickInterceptedException){
             ExtentLogger.fail("Click Intercepted ", clickInterceptedException.fillInStackTrace());
         }
@@ -37,9 +38,42 @@ public class PageActionUtils {
     }
 
     public static void moveToElement(By element){
-        Actions actions = new Actions(DriverManager.getDriver());
-        actions.moveToElement(getElement(element)).build().perform();
+        try {
+            Actions actions = new Actions(DriverManager.getDriver());
+            actions.moveToElement(getElement(element)).build().perform();
+        } catch (Exception exception){
+            ExtentLogger.fail(" Exception Occurred while locating element", exception.fillInStackTrace());
+        }
+
+
     }
+
+    public static void scrollToView(By element){
+        JavascriptExecutor executor = (JavascriptExecutor) DriverManager.getDriver();
+        executor.executeScript("arguments[0].scrollIntoView(true);", getElement(element));
+
+    }
+
+    @SneakyThrows
+    public static void scrollToTopByKey(){
+        Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_HOME);
+
+    }
+
+    public static boolean isElementDisplayed(By element){
+        return getElement(element).isDisplayed();
+    }
+
+    public static void navigateToAnotherUrl(String url){
+        DriverManager.getDriver().get(url);
+    }
+
+    @SneakyThrows
+    public static void waitToLoad(long milliSeconds){
+        Thread.sleep(milliSeconds);
+    }
+
 
 
     private static WebElement getElement(By element){

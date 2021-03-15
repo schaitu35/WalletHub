@@ -7,6 +7,8 @@ import java.lang.annotation.Documented;
 public class ExtentThreadLocal {
 
 
+    private static ThreadLocal<ExtentTest> extentTestThreadLocal = new ThreadLocal<>();
+
     public static ExtentTest getExtentTest() {
         return extentTestThreadLocal.get();
     }
@@ -15,7 +17,7 @@ public class ExtentThreadLocal {
         extentTestThreadLocal.set(extentTest);
     }
 
-   private static ThreadLocal<ExtentTest> extentTestThreadLocal = new ThreadLocal<>();
+
 
 
 
