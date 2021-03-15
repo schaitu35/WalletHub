@@ -39,7 +39,14 @@ public class HomePageTest extends TestBase {
     Verifying Awesome Text Post submission review
      */
     Assert.assertTrue(reviewSubmitPage.isAwesomeTextDispayed());
+
+    /*
+    Navigating to Review Page
+     */
     reviewPage = reviewSubmitPage.navigateToReviewPage();
+    /*
+    Navigating to Profile Page
+     */
     reviewPage.navigateToProfilePage();
     Assert.assertEquals(profilePage.getCompanyName(),"Test Insurance Company");
 
